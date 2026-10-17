@@ -64,20 +64,13 @@ Observed smoke-test outcome:
 
 Because the test used synthetic data and only one epoch, these results are pipeline-validation results rather than scientific segmentation performance.
 
-## 6. Repository Publication
-I published the project to GitHub as a new public repository:
-
-`https://github.com/faithwamb27/mri_tumor_segmentation`
-
-Generated checkpoints, outputs, and cached data were excluded from the repository via `.gitignore`.
-
-## 7. Scope and Notes
+## 6. Scope and Notes
 The current work establishes a functional training and inference pipeline, along with support for several data sources and export paths. Real BraTS-scale performance evaluation remains a separate training and benchmarking step.
 
-## 8. Conclusion
+## 7. Conclusion
 I built a complete and reproducible 3-D MRI tumour segmentation workflow with multiple data ingestion paths, a residual U-Net architecture, and standard BraTS evaluation support. The successful smoke test shows that the codebase is operational, and the GitHub repository makes the project easy to share, review, and extend.
 
-## 9. References
+## 8. References
 1. BraTS Challenge datasets and documentation.
 2. PyTorch documentation.
 3. Nibabel documentation.
