@@ -1,13 +1,13 @@
 # MRI Brain Tumour Segmentation: Research Report
 
 ## Abstract
-This project implements a 3-D Residual U-Net pipeline for BraTS-style brain tumour segmentation from multi-modal MRI. The codebase supports local BraTS folders, HuggingFace streaming, IDC DICOM streaming, and synthetic data for offline testing. A CPU smoke test using synthetic data completed successfully, confirming the training pipeline can start, train for one epoch, and write checkpoints/logs. The project was also packaged into a new GitHub repository for sharing and collaboration.
+I developed a 3-D Residual U-Net pipeline for BraTS-style brain tumour segmentation from multi-modal MRI. The codebase supports local BraTS folders, HuggingFace streaming, IDC DICOM streaming, and synthetic data for offline testing. I also ran a CPU smoke test using synthetic data, which confirmed that the training pipeline can start, train for one epoch, and write checkpoints and logs. The project is published in a GitHub repository for sharing and further experimentation.
 
 ## 1. Introduction
-Brain tumour segmentation is a core task in medical image analysis because accurate delineation of tumour subregions supports diagnosis, treatment planning, and response monitoring. BraTS datasets provide multi-modal MRI volumes with voxel-level annotations for background, necrotic core, edema, and enhancing tumour. This project targets that problem using a 3-D convolutional neural network designed to learn spatial context directly from volumetric MRI.
+Brain tumour segmentation is a core task in medical image analysis because accurate delineation of tumour subregions supports diagnosis, treatment planning, and response monitoring. BraTS datasets provide multi-modal MRI volumes with voxel-level annotations for background, necrotic core, edema, and enhancing tumour. In this project, I targeted that problem using a 3-D convolutional neural network designed to learn spatial context directly from volumetric MRI.
 
 ## 2. Objectives
-The project aims to:
+The project was designed to:
 
 1. Train a 3-D segmentation model for BraTS-style MRI data.
 2. Support multiple data sources, including local NIfTI folders, HuggingFace streaming, IDC DICOM streaming, and synthetic volumes.
@@ -17,7 +17,7 @@ The project aims to:
 ## 3. Materials and Methods
 
 ### 3.1 Data Pipeline
-The pipeline accepts four-channel MRI inputs (`t1`, `t1ce`, `t2`, `flair`) and a remapped label space with four classes: background, necrotic/non-enhancing tumour core, edema, and enhancing tumour. The codebase includes:
+The pipeline accepts four-channel MRI inputs (`t1`, `t1ce`, `t2`, `flair`) and a remapped label space with four classes: background, necrotic/non-enhancing tumour core, edema, and enhancing tumour. I implemented the data handling across these modules:
 
 - `src/dataset.py` for BraTS folder loading, preprocessing, cropping, and augmentation.
 - `src/hf_stream.py` for on-demand HuggingFace streaming.
@@ -25,7 +25,7 @@ The pipeline accepts four-channel MRI inputs (`t1`, `t1ce`, `t2`, `flair`) and a
 - `src/synthetic.py` for fully offline synthetic data generation.
 
 ### 3.2 Model Architecture
-The model is a 3-D Residual U-Net with:
+I used a 3-D Residual U-Net with:
 
 - 4 encoder levels,
 - residual convolution blocks,
@@ -48,11 +48,11 @@ Evaluation utilities compute Dice and HD95 for the standard BraTS regions:
 Metrics and aggregation logic are implemented in `src/metrics.py`, while inference and export functions are in `evaluate.py`, `predict.py`, and `src/visualize.py`.
 
 ## 4. Experimental Status
-A recommended smoke test was run with synthetic data:
+I ran a recommended smoke test with synthetic data:
 
 `python stream_demo.py --mode synthetic --n_synthetic 10 --epochs 1`
 
-The run completed successfully on CPU, producing a one-epoch training result and saving checkpoints and logs. During testing, a Windows console encoding issue caused by non-ASCII log output was identified and fixed. After that change, the same smoke test completed cleanly.
+The run completed successfully on CPU, produced a one-epoch training result, and saved checkpoints and logs. I also fixed a Windows console encoding issue caused by non-ASCII log output so the same smoke test now completes cleanly.
 
 ## 5. Results
 Observed smoke-test outcome:
@@ -65,20 +65,17 @@ Observed smoke-test outcome:
 Because the test used synthetic data and only one epoch, these results are pipeline-validation results rather than scientific segmentation performance.
 
 ## 6. Repository Publication
-The project was uploaded to GitHub as a new public repository:
+I published the project to GitHub as a new public repository:
 
 `https://github.com/faithwamb27/mri_tumor_segmentation`
 
-Generated checkpoints, outputs, and cached data were excluded from the published repository via `.gitignore`.
+Generated checkpoints, outputs, and cached data were excluded from the repository via `.gitignore`.
 
-## 7. Limitations
-
-- The one-epoch synthetic run does not measure real BraTS performance.
-- Full training on real BraTS data was not executed in this session.
-- Windows console encoding required a small logging fix to avoid non-ASCII output.
+## 7. Scope and Notes
+The current work establishes a functional training and inference pipeline, along with support for several data sources and export paths. Real BraTS-scale performance evaluation remains a separate training and benchmarking step.
 
 ## 8. Conclusion
-This project provides a complete and reproducible 3-D MRI tumour segmentation workflow with multiple data ingestion paths, a residual U-Net architecture, and standard BraTS evaluation support. The successful smoke test demonstrates that the codebase is operational, and the GitHub repository now makes the project easy to share, review, and extend.
+I built a complete and reproducible 3-D MRI tumour segmentation workflow with multiple data ingestion paths, a residual U-Net architecture, and standard BraTS evaluation support. The successful smoke test shows that the codebase is operational, and the GitHub repository makes the project easy to share, review, and extend.
 
 ## 9. References
 1. BraTS Challenge datasets and documentation.
