@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+checkpoints/
+outputs/
+data/.hf_cache*/
+data/.idc_cache/

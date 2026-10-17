@@ -1,0 +1,14 @@
+torch>=2.0.0
+torchvision>=0.15.0
+nibabel>=5.0.0
+numpy>=1.24.0
+scipy>=1.10.0
+matplotlib>=3.7.0
+tqdm>=4.65.0
+requests>=2.28.0    # for HuggingFace streaming
+
+# Optional – IDC DICOM streaming (--mode idc)
+# pip install idc-index s3fs pydicom
+
+# Optional – HD95 metric
+# pip install medpy
