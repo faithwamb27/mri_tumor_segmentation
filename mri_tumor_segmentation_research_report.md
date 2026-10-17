@@ -1,7 +1,7 @@
 # MRI Brain Tumour Segmentation: Research Report
 
 ## Abstract
-I developed a 3-D Residual U-Net pipeline for BraTS-style brain tumour segmentation from multi-modal MRI. The codebase supports local BraTS folders, HuggingFace streaming, IDC DICOM streaming, and synthetic data for offline testing. I also ran a CPU smoke test using synthetic data, which confirmed that the training pipeline can start, train for one epoch, and write checkpoints and logs. The project is published in a GitHub repository for sharing and further experimentation.
+I developed a 3-D Residual U-Net pipeline for BraTS-style brain tumour segmentation from multi-modal MRI. The codebase supports local BraTS folders, HuggingFace streaming, IDC DICOM streaming, and synthetic data for offline testing. I also ran a real-data smoke test on the public HuggingFace BraTS2023 subset, which confirmed that the training pipeline can start, train for one epoch, and write checkpoints and logs. The project is published in a GitHub repository for sharing and further experimentation.
 
 ## 1. Introduction
 Brain tumour segmentation is a core task in medical image analysis because accurate delineation of tumour subregions supports diagnosis, treatment planning, and response monitoring. BraTS datasets provide multi-modal MRI volumes with voxel-level annotations for background, necrotic core, edema, and enhancing tumour. In this project, I targeted that problem using a 3-D convolutional neural network designed to learn spatial context directly from volumetric MRI.
@@ -48,27 +48,27 @@ Evaluation utilities compute Dice and HD95 for the standard BraTS regions:
 Metrics and aggregation logic are implemented in `src/metrics.py`, while inference and export functions are in `evaluate.py`, `predict.py`, and `src/visualize.py`.
 
 ## 4. Experimental Status
-I ran a recommended smoke test with synthetic data:
+I ran a real-data smoke test with the public HuggingFace BraTS2023 subset:
 
-`python stream_demo.py --mode synthetic --n_synthetic 10 --epochs 1`
+`python stream_demo.py --mode hf --repo brats2023 --no_refresh --epochs 1`
 
-The run completed successfully on CPU, produced a one-epoch training result, and saved checkpoints and logs. I also fixed a Windows console encoding issue caused by non-ASCII log output so the same smoke test now completes cleanly.
+The run completed successfully on CPU, produced a one-epoch training result, and saved checkpoints and logs.
 
 ## 5. Results
 Observed smoke-test outcome:
 
 - Training started successfully.
-- Data loading worked in synthetic mode.
+- Data loading worked with the HuggingFace BraTS2023 subset.
 - One epoch completed without runtime failure.
 - Best validation Dice was reported and checkpoints were written.
 
-Because the test used synthetic data and only one epoch, these results are pipeline-validation results rather than scientific segmentation performance.
+The smoke test produced train Dice `0.0415` and validation Dice `0.0464`. Because the test used one epoch and a small public subset, these results are best interpreted as pipeline validation rather than final segmentation performance.
 
 ## 6. Scope and Notes
-The current work establishes a functional training and inference pipeline, along with support for several data sources and export paths. Real BraTS-scale performance evaluation remains a separate training and benchmarking step.
+The current work establishes a functional training and inference pipeline, along with support for several data sources and export paths.
 
 ## 7. Conclusion
-I built a complete and reproducible 3-D MRI tumour segmentation workflow with multiple data ingestion paths, a residual U-Net architecture, and standard BraTS evaluation support. The successful smoke test shows that the codebase is operational, and the GitHub repository makes the project easy to share, review, and extend.
+I built a complete and reproducible 3-D MRI tumour segmentation workflow with multiple data ingestion paths, a residual U-Net architecture, and standard BraTS evaluation support. The successful real-data smoke test shows that the codebase is operational, and the GitHub repository makes the project easy to share, review, and extend.
 
 ## 8. References
 1. BraTS Challenge datasets and documentation.
